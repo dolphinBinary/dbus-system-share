@@ -1,2 +1,3 @@
 # dbus-system-share
-Simple dbus system wide share app for Linux
+Простая реализация приложения на С++| QT | Dbus
+для system wide share
