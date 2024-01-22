@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(YourProjectName)
+project(dbus-system-share)
 
 set(CMAKE_CXX_STANDARD 17)
 
-# Add your source files here
+# Add source files here
 set(SOURCES
         DBusInterface.cpp
         DBusInterface.h
