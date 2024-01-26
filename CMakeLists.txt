@@ -14,11 +14,12 @@ set(SOURCES
         FileFormatRegistry.h
         FileOpenListener.cpp
         FileOpenListener.h
+        MyFileOpenListener.h
         main.cpp
 )
 
 # Add any additional dependencies here
-find_package(Qt5 DBus Widgets REQUIRED COMPONENTS Core)
+find_package(Qt5 REQUIRED COMPONENTS DBus Widgets Core)
 
 # Create the executable
 add_executable(${PROJECT_NAME} ${SOURCES})
