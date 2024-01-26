@@ -8,18 +8,18 @@ int main(int argc, char* argv[])
 {
     QCoreApplication a(argc, argv);
 
-    DBusInterface dbusInterface;
+    MyDBusInterface myDBusInterface;
     FileOpenListener fileOpenListener;
     FileFormatRegistry fileFormatRegistry;
 
     QObject::connect(&fileOpenListener, &FileOpenListener::fileOpened, [&](const QString& path, const QString& format)
     {
-        QStringList apps = dbusInterface.getRegisteredApplications(format);
+        QStringList apps = myDBusInterface.getRegisteredApplications(format);
         bool ok;
         QString appName = QInputDialog::getItem(nullptr, "Select Application", "Select an application to open the file:", apps, 0, false, &ok);
         if (ok && !appName.isEmpty())
         {
-            dbusInterface.openFileWithApplication(appName, path);
+            myDBusInterface.openFileWithApplication(appName, path);
         }
     });
 

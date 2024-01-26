@@ -4,6 +4,8 @@ project(dbus-system-share)
 
 set(CMAKE_CXX_STANDARD 17)
 
+set(CMAKE_AUTOMOC ON)
+
 # Add source files here
 set(SOURCES
         DBusInterface.cpp
@@ -16,10 +18,10 @@ set(SOURCES
 )
 
 # Add any additional dependencies here
-find_package(Qt5 REQUIRED COMPONENTS Core)
+find_package(Qt5 DBus Widgets REQUIRED COMPONENTS Core)
 
 # Create the executable
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 # Link the necessary libraries
-target_link_libraries(${PROJECT_NAME} Qt5::Core)
+target_link_libraries(${PROJECT_NAME} Qt5::DBus Qt5::Widgets Qt5::Core)
