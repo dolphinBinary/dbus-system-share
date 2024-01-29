@@ -5,16 +5,15 @@
 
 class FileFormatRegistry : public QObject
 {
- Q_OBJECT
+Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.example.FileFormatRegistry")
 
- public:
+public:
     explicit FileFormatRegistry(QObject* parent = nullptr);
 
- public slots:
+public slots:
     void registerApplication(const QString& appName, const QStringList& fileFormats);
-    QStringList getApplicationsForFormat(const QString& fileFormat);
 
- private:
+private:
     QMap<QString, QStringList> m_registry;
 };

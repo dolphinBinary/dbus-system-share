@@ -14,7 +14,6 @@ set(SOURCES
         FileFormatRegistry.h
         FileOpenListener.cpp
         FileOpenListener.h
-        MyFileOpenListener.h
         main.cpp
 )
 

@@ -1,25 +1,34 @@
 #include <QCoreApplication>
-#include <QInputDialog>
-#include "DBusInterface.h"
 #include "FileOpenListener.h"
 #include "FileFormatRegistry.h"
+#include "DBusInterface.h"
 
 int main(int argc, char* argv[])
 {
-    QCoreApplication a(argc, argv);
+    QCoreApplication application(argc, argv);
 
-    MyDBusInterface myDBusInterface;
+    // Создание экземпляров классов
     FileOpenListener fileOpenListener;
     FileFormatRegistry fileFormatRegistry;
+    DBusInterface dbusInterface;
 
+    // Логика отслеживания директории и обработки файлов
+    fileOpenListener.addPath("Documents");
     QObject::connect(&fileOpenListener, &FileOpenListener::fileOpened, [&](const QString& path, const QString& format)
     {
-        QStringList apps = myDBusInterface.getRegisteredApplications(format);
-        bool ok;
-        QString appName = QInputDialog::getItem(nullptr, "Select Application", "Select an application to open the file:", apps, 0, false, &ok);
-        if (ok && !appName.isEmpty())
+        QStringList applications = dbusInterface.getRegisteredApplications(format);
+        if (applications.isEmpty())
         {
-            myDBusInterface.openFileWithApplication(appName, path);
+            // Вывод диалогового окна для выбора приложений
+            qDebug() << "Выберите приложение для открытия файла" << path;
+            // Регистрация связки формат - приложение
+            fileFormatRegistry.registerApplication("Приложение", QStringList() << format);
+        }
+        else
+        {
+            // Запуск приложения
+            QString appName = applications.first();
+            DBusInterface::openFileWithApplication(appName, path);
         }
     });
 

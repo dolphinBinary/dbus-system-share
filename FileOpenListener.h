@@ -3,18 +3,19 @@
 
 class FileOpenListener : public QObject
 {
- Q_OBJECT
+Q_OBJECT
 
- public:
+public:
     explicit FileOpenListener(QObject* parent = nullptr);
+
     void addPath(const QString& path);
 
- signals:
+signals:
     void fileOpened(const QString& path, const QString& format);
 
- private slots:
+private slots:
     void onFileOpened(const QString& path);
 
- private:
+private:
     QFileSystemWatcher m_watcher;
 };

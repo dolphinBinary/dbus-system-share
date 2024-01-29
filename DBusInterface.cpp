@@ -1,16 +1,32 @@
 #include "DBusInterface.h"
 
-MyDBusInterface::MyDBusInterface(QObject *parent)
-        : QDBusAbstractAdaptor(parent) {
-    QDBusConnection::sessionBus().registerObject("/", this, QDBusConnection::ExportAllInvokables);
+DBusInterface::DBusInterface(QObject* parent)
+        : QObject(parent),
+          m_interface("org.freedesktop.DBus", "/", "org.freedesktop.DBus", QDBusConnection::sessionBus())
+{
+    if (!m_interface.isValid())
+    {
+        qWarning() << "Could not connect to DBus. Please check your DBus settings.";
+    }
 }
 
-QStringList DBusInterface::getRegisteredApplications(const QString &fileFormat) {
+QStringList DBusInterface::getRegisteredApplications(const QString& fileFormat)
+{
     QDBusMessage message = m_interface.call("GetRegisteredApplications", fileFormat);
+    if (message.type() == QDBusMessage::ErrorMessage)
+    {
+        qWarning() << "Error calling GetRegisteredApplications:" << message.errorMessage();
+        return QStringList();
+    }
     return message.arguments().first().toStringList();
 }
 
-void DBusInterface::openFileWithApplication(const QString &appName, const QString &filePath) {
+void DBusInterface::openFileWithApplication(const QString& appName, const QString& filePath)
+{
     QDBusInterface appInterface(appName, "/", "", QDBusConnection::sessionBus());
-    appInterface.call("OpenFile", filePath);
+    QDBusMessage message = appInterface.call("OpenFile", filePath);
+    if (message.type() == QDBusMessage::ErrorMessage)
+    {
+        qWarning() << "Error calling OpenFile:" << message.errorMessage();
+    }
 }

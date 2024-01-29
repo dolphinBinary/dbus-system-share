@@ -1,13 +1,19 @@
 #include <QObject>
-#include <QDBusAbstractAdaptor>
+#include <QDebug>
+#include <QDBusInterface>
+#include <QDBusConnection>
 
-class MyDBusInterface : public QDBusAbstractAdaptor
+class DBusInterface : public QObject
 {
-    Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", "org.example.MyDBusInterface")
+Q_OBJECT
 
 public:
-    explicit MyDBusInterface(QObject* parent = nullptr);
-    Q_INVOKABLE QStringList getRegisteredApplications(const QString& fileFormat);
-    Q_INVOKABLE void openFileWithApplication(const QString& appName, const QString& filePath);
+    explicit DBusInterface(QObject* parent = nullptr);
+
+    QStringList getRegisteredApplications(const QString& fileFormat);
+
+    static void openFileWithApplication(const QString& appName, const QString& filePath);
+
+private:
+    QDBusInterface m_interface;
 };
