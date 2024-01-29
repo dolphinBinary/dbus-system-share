@@ -14,9 +14,20 @@
 
 1. Клонируйте репозиторий: `git clone https://github.com/dolphinBinary/dbus-system-share`
 2. Перейдите в директорию проекта: `cd dbus-system-share`
+3. В файле DBusInterface.cpp укажите путь к Dbus
 3. Соберите проект с помощью сmake: `сmake`
 4. Соберите проект с помощью make: `make`
-5. Запустите приложение: `./dbus-system-share`
+6. Запустите приложение: `./dbus-system-share`
+
+##  Примеры команд запуска и работы с приложением
+
+* Команда qdbus*, которая может быть использована для вызова метода getRegisteredApplications:
+> qdbus org.freedesktop.DBus / GetRegisteredApplications text/plain
+
+Здесь "org.freedesktop.DBus" - это имя вашего сервиса D-Bus, "/" - путь к объекту, "GetRegisteredApplications" - имя метода, а "text/plain" - аргумент метода, представляющий формат файла.
+
+*установить qdbus можно с помощью команды:
+> sudo apt install qttools5-dev-tools
 
 ## Обзор
 
