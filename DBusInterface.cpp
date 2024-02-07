@@ -2,7 +2,7 @@
 
 DBusInterface::DBusInterface(QObject* parent)
         : QObject(parent),
-          m_interface("org.freedesktop.DBus", "/", "org.freedesktop.DBus", QDBusConnection::sessionBus())
+          m_interface("org.example.SystemShare", "/", "org.example.SystemShare", QDBusConnection::sessionBus())
 {
     if (!m_interface.isValid())
     {

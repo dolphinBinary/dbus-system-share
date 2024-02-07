@@ -1,0 +1,5 @@
+[D-BUS Service]
+Name=SystemShare
+Exec=/path/to/project/.build/dbus-system-share
+User=dolphinBinary
+SystemdService=yes
